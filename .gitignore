@@ -127,7 +127,9 @@ dist
 # TS Output
 bin/
 
-# Datbase
+# Database
 starboard.sqlite
 params.json
 starred.json
+
+.vscode/

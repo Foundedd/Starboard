@@ -39,7 +39,7 @@ export async function findStarboardChannelForTextChannel(
         if (channel.parent) {
             return findStarboardChannelForTextChannel(
                 config,
-                channel.parent,  // Uhh idk what this error means
+                channel.parent,
                 database
             );
         }
