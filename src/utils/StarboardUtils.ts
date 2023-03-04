@@ -14,7 +14,9 @@ import {
     MessageActionRow,
     MessageButton,
     Message,
-    EmbedAuthorData
+    EmbedAuthorData,
+    MessageAttachment,
+    ForumChannel
 } from 'discord.js';
 import Database from '../database/DatabaseObject';
 import { GuildConfigInstance } from '../interfaces/GuildConfig';
@@ -22,7 +24,7 @@ import { StarredMessageInstance } from '../interfaces/StarredMessages';
 
 const STARBOARD_EMBED_COLOR: readonly [number, number, number] = [255, 172, 51];
 const DEFAULT_STARBOARD_EMOJI: string = '⭐';
-type StarrableChannel = TextChannel | NewsChannel | ThreadChannel;
+type StarrableChannel = TextChannel | NewsChannel | ThreadChannel | ForumChannel;
 
 export async function findStarboardChannelForTextChannel(
     config: GuildConfigInstance,
@@ -37,7 +39,7 @@ export async function findStarboardChannelForTextChannel(
         if (channel.parent) {
             return findStarboardChannelForTextChannel(
                 config,
-                channel.parent,
+                channel.parent,  // Uhh idk what this error means
                 database
             );
         }
@@ -97,8 +99,11 @@ export function generateBasicStarboardEmbed(message: Message): MessageEmbed {
         );
     const firstAttachment = message.attachments.first();
     if (firstAttachment) {
-        embed.setImage(firstAttachment.url);
-    }
+        message.attachments.forEach(function (attachment: MessageAttachment) {
+            embed.setImage(attachment.url)  // Doesn't embed on mobile but will on Desktop I think
+        });
+    } 
+    
     return embed;
 }
 
