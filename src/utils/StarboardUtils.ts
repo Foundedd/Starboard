@@ -14,6 +14,7 @@ import {
     MessageActionRow,
     MessageButton,
     Message,
+    EmbedAuthorData
 } from 'discord.js';
 import Database from '../database/DatabaseObject';
 import { GuildConfigInstance } from '../interfaces/GuildConfig';
@@ -70,15 +71,17 @@ export async function generateStarboardEmbed(
 }
 
 export function generateBasicStarboardEmbed(message: Message): MessageEmbed {
+    const author_data: EmbedAuthorData = {
+        name: 'Starred Message', 
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+    };  // I'm sure you know a way to generate it in the embed but I'm too dumb
+
     let embed = new MessageEmbed()
         .setTitle('Content')
         .setDescription(message.content)
         .setColor(STARBOARD_EMBED_COLOR)
         .setTimestamp(message.createdTimestamp)
-        .setAuthor(
-            'Starred Message',
-            message.author.displayAvatarURL({ dynamic: true })
-        )
+        .setAuthor(author_data)
         .addFields(
             { name: 'Author', value: message.author.toString(), inline: true },
             {
