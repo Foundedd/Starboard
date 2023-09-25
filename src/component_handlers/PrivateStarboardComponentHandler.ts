@@ -10,7 +10,7 @@ export const handler: ComponentHandlerFunction = async (
         fetchReply: true,
     });
     if ('delete' in message) {
-        message.delete();
+        await message.delete();
     } else {
         if (!interaction.channelId) {
             throw new Error(

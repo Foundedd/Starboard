@@ -27,8 +27,8 @@ export const handler: ContextMenuHandler = async (
             .setLabel('Delete Message')
             .setStyle('DANGER')
     );
-    interaction.user.send({ embeds: [embed], components: [deleteButtonRow] });
-    interaction.reply({
+    await interaction.user.send({ embeds: [embed], components: [deleteButtonRow] });
+    await interaction.reply({
         content:
             'Message saved to personal starboard succesfully, check your DMs!',
         ephemeral: true,

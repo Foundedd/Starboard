@@ -13,7 +13,7 @@ async function updateMessageLeaderboard(
 ): Promise<void> {
     const embed = generateLeaderboardEmbed(userStars, page);
     const pageControlRow = generateLeaderboardComponentsRow(userStars, page);
-    interaction.update({ embeds: [embed], components: [pageControlRow] });
+    await interaction.update({ embeds: [embed], components: [pageControlRow] });
 }
 
 export const handler: ComponentHandlerFunction = async (
@@ -26,17 +26,17 @@ export const handler: ComponentHandlerFunction = async (
     const page = interaction.customId.match(pattern)![1];
     switch (page) {
         case 'FIRST':
-            updateMessageLeaderboard(userStars, 1, interaction);
+            await updateMessageLeaderboard(userStars, 1, interaction);
             break;
         case 'LAST':
-            updateMessageLeaderboard(
+            await updateMessageLeaderboard(
                 userStars,
                 Math.ceil(userStars.length / 10),
                 interaction
             );
             break;
         default:
-            updateMessageLeaderboard(
+            await updateMessageLeaderboard(
                 userStars,
                 Number.parseInt(page),
                 interaction

@@ -31,7 +31,7 @@ interface ConfigCommandOptionHandler {
 async function sendUnknownCommandError(
     interaction: CommandInteraction
 ): Promise<void> {
-    interaction.reply({
+    await interaction.reply({
         content: 'Error: Unknown Command',
         ephemeral: true,
     });
@@ -46,18 +46,18 @@ async function handleCustomStarboardCommandGroup(
             const customStarboard = interaction.options.getChannel('starboard');
             const target = interaction.options.getChannel('target');
             if (!customStarboard || !target) {
-                interaction.reply({
+                await interaction.reply({
                     content: 'Error fetching one or more arguments',
                     ephemeral: true,
                 });
                 break;
             }
-            client.database.addCustomChannel(
+            await client.database.addCustomChannel(
                 target,
                 customStarboard,
                 interaction.guild!
             );
-            interaction.reply({
+            await interaction.reply({
                 content: `Succesfully added override from starred messages in ${target} to ${customStarboard}`,
                 ephemeral: true,
             });
@@ -65,20 +65,20 @@ async function handleCustomStarboardCommandGroup(
         case 'remove':
             const channel = interaction.options.getChannel('channel');
             if (!channel) {
-                interaction.reply({
+                await interaction.reply({
                     content: 'Error fetching channel argument',
                     ephemeral: true,
                 });
                 break;
             }
             (await client.database.getCustomChannel(channel.id))?.destroy();
-            interaction.reply({
+            await interaction.reply({
                 content: `Succesfully removed override from starred messages in ${channel}`,
                 ephemeral: true,
             });
             break;
         default:
-            sendUnknownCommandError(interaction);
+            await sendUnknownCommandError(interaction);
             break;
     }
 }
@@ -216,10 +216,10 @@ export const handler: CommandHandler = async (
 ) => {
     switch (interaction.options.getSubcommandGroup(false)) {
         case 'custom':
-            handleCustomStarboardCommandGroup(client, interaction);
+            await handleCustomStarboardCommandGroup(client, interaction);
             break;
         default:
-            handleDefaultCommandGroup(client, interaction);
+            await handleDefaultCommandGroup(client, interaction);
             break;
     }
 };

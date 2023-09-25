@@ -71,9 +71,9 @@ async function starPublicMessage(
         reaction.message.id
     );
     if (starredMessage) {
-        updateExistingStarredMessage(config, reaction, client, starredMessage);
+        await updateExistingStarredMessage(config, reaction, client, starredMessage);
     } else {
-        createNewStarredMessage(reaction, config, client);
+        await createNewStarredMessage(reaction, config, client);
     }
 }
 
