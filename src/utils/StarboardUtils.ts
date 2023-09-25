@@ -16,8 +16,7 @@ import {
     MessageButton,
     Message,
     EmbedAuthorData,
-    MessageAttachment,
-    ForumChannel
+    MessageAttachment
 } from 'discord.js';
 import Database from '../database/DatabaseObject';
 import { GuildConfigInstance } from '../interfaces/GuildConfig';
@@ -59,16 +58,16 @@ export async function generateStarboardEmbed(
     const message = await reaction.message.fetch();
     let embed = generateBasicStarboardEmbed(message);
     if (!reaction.emoji.id) {
-        embed.setFooter(
-            ` ${reaction.emoji.name} ${reaction.count} ${
+        embed.setFooter({
+            text: ` ${reaction.emoji.name} ${reaction.count} ${
                 reaction.emoji.name === DEFAULT_STARBOARD_EMOJI ? 'stars' : ''
             }`
-        );
+        });
     } else if (reaction.emoji.name && reaction.emoji.url) {
-        embed.setFooter(
-            `${reaction.count} ${reaction.emoji.name.toLowerCase()}`,
-            reaction.emoji.url
-        );
+        embed.setFooter({
+            text: `${reaction.count} ${reaction.emoji.name.toLowerCase()}, 
+            ${reaction.emoji.url}`
+        });
     }
     return embed;
 }

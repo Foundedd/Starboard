@@ -1,7 +1,7 @@
 import { initialize as initializeStarredMessages } from './models/StarredMessages';
 import { initialize as initializeGuildConfig } from './models/GuildConfig';
 import { initialize as initializeCustomChannels } from './models/CustomChannels';
-import { ModelCtor } from 'sequelize/types';
+import { ModelStatic } from 'sequelize/types';
 import { Sequelize } from 'sequelize';
 import { Logger } from 'log4js';
 import { GuildConfigInstance } from '../interfaces/GuildConfig';
@@ -17,9 +17,9 @@ import {
 import { APIInteractionDataResolvedChannel } from 'discord.js/node_modules/discord-api-types/payloads/v9/_interactions/applicationCommands';
 class Database {
     private readonly sequelize: Sequelize;
-    private starredMessages: ModelCtor<StarredMessageInstance>;
-    private guildConfig: ModelCtor<GuildConfigInstance>;
-    private customChannels: ModelCtor<CustomChannelInstance>;
+    private starredMessages: ModelStatic<StarredMessageInstance>;
+    private guildConfig: ModelStatic<GuildConfigInstance>;
+    private customChannels: ModelStatic<CustomChannelInstance>;
 
     public constructor(database_path: string, logger?: Logger) {
         this.sequelize = new Sequelize({
