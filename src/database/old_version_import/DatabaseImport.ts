@@ -30,13 +30,13 @@ if (process.env.DATABASE_PATH) {
                     : null;
             config.emoji = params[guildId]['emoji'].toString();
             config.isUnicode = !!params[guildId]['is_unicode'];
-            config.save();
+            void config.save();
         });
         for (const customChannel in params[guildId]['custom']) {
             for (const mappedChannelNumber in params[guildId]['custom'][
                 customChannel
             ]) {
-                customChannels.create({
+                void customChannels.create({
                     channelId:
                         params[guildId]['custom'][customChannel][
                             mappedChannelNumber
@@ -50,7 +50,7 @@ if (process.env.DATABASE_PATH) {
 
     for (const guildId in starred) {
         for (const messageId in starred[guildId]) {
-            starredMessages.create({
+            void starredMessages.create({
                 messageId: messageId,
                 guildId: guildId,
                 userId: starred[guildId][messageId]["author"],

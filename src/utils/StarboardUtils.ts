@@ -74,9 +74,9 @@ export async function generateStarboardEmbed(
 
 export function generateBasicStarboardEmbed(message: Message): MessageEmbed {
     const author_data: EmbedAuthorData = {
-        name: 'Starred Message', 
+        name: 'Starred Message',
         iconURL: message.author.displayAvatarURL({ dynamic: true })
-    };  // I'm sure you know a way to generate it in the embed but I'm too dumb
+    };
 
     let embed = new MessageEmbed()
         .setTitle('Content')
@@ -102,8 +102,8 @@ export function generateBasicStarboardEmbed(message: Message): MessageEmbed {
         message.attachments.forEach(function (attachment: MessageAttachment) {
             embed.setImage(attachment.url)  // Doesn't embed on mobile but will on Desktop I think
         });
-    } 
-    
+    }
+
     return embed;
 }
 

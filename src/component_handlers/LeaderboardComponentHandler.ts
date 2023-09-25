@@ -45,4 +45,4 @@ export const handler: ComponentHandlerFunction = async (
     }
 };
 
-export const pattern: RegExp = /^leaderboard_((?:FIRST|LAST)|(?:\d+))$/;
+export const pattern: RegExp = /^leaderboard_((?:FIRST|LAST)|\d+)$/;

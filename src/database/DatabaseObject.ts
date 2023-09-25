@@ -10,14 +10,13 @@ import { CustomChannelInstance } from '../interfaces/CustomChannels';
 import {
     Guild,
     GuildBasedChannel,
-    GuildChannel,
     Message,
     MessageReaction,
     Snowflake,
 } from 'discord.js';
 import { APIInteractionDataResolvedChannel } from 'discord.js/node_modules/discord-api-types/payloads/v9/_interactions/applicationCommands';
 class Database {
-    private sequelize: Sequelize;
+    private readonly sequelize: Sequelize;
     private starredMessages: ModelCtor<StarredMessageInstance>;
     private guildConfig: ModelCtor<GuildConfigInstance>;
     private customChannels: ModelCtor<CustomChannelInstance>;
@@ -34,7 +33,7 @@ class Database {
     }
 
     public sync(): void {
-        this.sequelize.sync();
+        void this.sequelize.sync();
     }
 
     public async getGuildConfig(

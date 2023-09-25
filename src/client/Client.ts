@@ -93,7 +93,7 @@ class Bot extends Client {
                 }
             });
             this.logger?.info(
-                `Succesfully registered ${this.componentHandlers.size} component handlers`
+                `Successfully registered ${this.componentHandlers.size} component handlers`
             );
         } catch (error) {
             this.logger?.error(`Failed to load component handlers: ${error}`);
@@ -119,7 +119,7 @@ class Bot extends Client {
     }
 
     public async run() {
-        this.login(this.config.token);
+        await this.login(this.config.token);
         await this.registerCommands();
     }
 
@@ -139,7 +139,7 @@ class Bot extends Client {
             this.on(eventName, wrapper);
         }
         this.logger?.info(
-            `Registered event ${eventName} (once=${!!event.once})`
+            `Registered event ${eventName} (once=${(event.once)})`
         );
     }
 
@@ -156,7 +156,7 @@ class Bot extends Client {
             );
             await this.restAPI.put(route, { body: commandsJSON });
             this.logger?.info(
-                `Succesfully registered ${commandsJSON.length} commands`
+                `Successfully registered ${commandsJSON.length} commands`
             );
         } catch (error) {
             this.logger?.error(`Error loading commands: ${error}`);

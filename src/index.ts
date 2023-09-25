@@ -35,4 +35,4 @@ const bot = new Bot(
 );
 
 logger.info('Starting bot');
-bot.run();
+void bot.run();

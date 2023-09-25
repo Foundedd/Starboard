@@ -1,4 +1,4 @@
-import { CommandInteraction, MessageComponentInteraction } from "discord.js";
+import { MessageComponentInteraction } from "discord.js";
 import { Bot } from "../client/Client";
 
 export interface ComponentHandlerFunction {

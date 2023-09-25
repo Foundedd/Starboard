@@ -58,7 +58,7 @@ async function handleCustomStarboardCommandGroup(
                 interaction.guild!
             );
             await interaction.reply({
-                content: `Succesfully added override from starred messages in ${target} to ${customStarboard}`,
+                content: `Successfully added override from starred messages in ${target} to ${customStarboard}`,
                 ephemeral: true,
             });
             break;
@@ -73,7 +73,7 @@ async function handleCustomStarboardCommandGroup(
             }
             (await client.database.getCustomChannel(channel.id))?.destroy();
             await interaction.reply({
-                content: `Succesfully removed override from starred messages in ${channel}`,
+                content: `Successfully removed override from starred messages in ${channel}`,
                 ephemeral: true,
             });
             break;
@@ -98,7 +98,7 @@ async function modifyStarboardEmote(
         }
         config.emoji = emojiMatch[0];
         config.isUnicode = true;
-        return `Starboard emote set to ${config.emoji} succesfully`;
+        return `Starboard emote set to ${config.emoji} successfully`;
     }
     const emoteMatch = emote.match(DISCORD_EMOTE_REGEX);
     if (!emoteMatch) {
@@ -163,7 +163,7 @@ async function handleServerConfigurationSubcommand(
         (argument) => argument.type === 'SUB_COMMAND'
     );
     if (!subCommand) {
-        interaction.reply({
+        await interaction.reply({
             content: 'Invalid command arguments',
             ephemeral: true,
         });
@@ -171,7 +171,7 @@ async function handleServerConfigurationSubcommand(
     }
     const args = subCommand.options;
     if (!args || args.length === 0) {
-        interaction.reply({
+        await interaction.reply({
             content: 'You must provide at least one configuration argument',
             ephemeral: true,
         });
@@ -190,8 +190,8 @@ async function handleServerConfigurationSubcommand(
                 })
             )
         ).join('\n');
-        guildConfig.save();
-        interaction.reply({ content: reply, ephemeral: true });
+        await guildConfig.save();
+        await interaction.reply({ content: reply, ephemeral: true });
     }
 }
 
@@ -202,10 +202,10 @@ async function handleDefaultCommandGroup(
     const subCommand = interaction.options.getSubcommand(false);
     switch (subCommand) {
         case 'server':
-            handleServerConfigurationSubcommand(interaction, client);
+            await handleServerConfigurationSubcommand(interaction, client);
             break;
         default:
-            sendUnknownCommandError(interaction);
+            await sendUnknownCommandError(interaction);
             break;
     }
 }
