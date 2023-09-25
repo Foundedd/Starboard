@@ -9,6 +9,7 @@ import {
     Snowflake,
     TextChannel,
     ThreadChannel,
+    ForumChannel,
     Guild,
     GuildEmoji,
     MessageActionRow,

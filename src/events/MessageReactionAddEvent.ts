@@ -38,7 +38,7 @@ async function getStarboardChannelFromChannel(
     channel: TextBasedChannel,
     client: Bot
 ): Promise<TextBasedChannel | null> {
-    if (channel.type === 'DM' || channel.type == 'GUILD_VOICE') {
+    if (channel.type === 'DM' || channel.type == 'GUILD_VOICE' || channel.type == "GUILD_STAGE_VOICE") {
         throw new Error('Invalid channel for starred message');
     }
     const channelId = await findStarboardChannelForTextChannel(
@@ -120,9 +120,17 @@ async function createNewStarredMessage(
         client
     );
     if (starboardChannel) {
-        let starboardMessage = await (
-            starboardChannel as TextBasedChannel
-        ).send({ embeds: [await generateStarboardEmbed(reaction)] });
+        let starboardMessage = await (starboardChannel as TextBasedChannel)
+            .send({ embeds: [await generateStarboardEmbed(reaction)] })
+            .catch((error) => {
+                client.logger?.error(
+                    `Could not send message in starboard channel (error: ${error})`
+                );
+                return null;
+            });
+        if (!starboardMessage) {
+            return;
+        }
         client.database
             .addNewStarredMessage(reaction, starboardMessage)
             .then(() => {
@@ -135,7 +143,7 @@ async function createNewStarredMessage(
                     `Could not add new starred message for message with id ${reaction.message.id}`,
                     e
                 );
-                starboardMessage.delete();
+                starboardMessage!.delete();
             });
     }
 }
